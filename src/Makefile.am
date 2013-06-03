@@ -8,18 +8,16 @@ OBJECTS       = $(patsubst %.cc, %.o, $(SOURCES))
 ROOTCFLAGS    := @ROOTCFLAGS@
 ROOTLIBS      := @ROOTLIBS@
 ROOTGLIBS     := @ROOTGLIBS@
-CFLAGS        += -I. -I.. -I../include $(ROOTCFLAGS)
+CFLAGS        += -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
 LIBS          += $(ROOTLIBS)
 LDFLAGS       = -O -L@ROOTLIBDIR@
-FASTJET_CXXFLAGS = @FASTJET_CXXFLAGS@
-FASTJET_LIBS  = @FASTJET_LIBS@
+FJ_CXXFLAGS   = @FASTJET_CXXFLAGS@
+FJ_LIBS       = @FASTJET_LIBS@
 
 all	: 	$(PROGNAME)
 
 $(PROGNAME):	$(OBJECTS)
-		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(LDFLAGS) $(LIBS)
-		echo $(FASTJET_CXXFLAGS)
-		echo $(FASTJET_LIBS)
+		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(LDFLAGS) $(LIBS) $(FJ_CXXFLAGS) $(FJ_LIBS)
 
 %.o : 		%.cc
 		$(CC) ${CFLAGS} -c -g -o $@ $<

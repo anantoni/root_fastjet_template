@@ -4,6 +4,8 @@
 AC_PREREQ(2.59)
 AC_INIT([root_fastjet_template],[1.0],[anastasios.antoniadis@cern.ch])
 AM_PROG_LIBTOOL
+AC_ENABLE_SHARED
+AC_ENABLE_STATIC
 AM_INIT_AUTOMAKE([foreign -Wall])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -12,9 +14,9 @@ AC_PROG_CC
 AC_PROG_CXX
 #ROOT_PATH
 
-ROOT_PATH(, , AC_MSG_ERROR(ROOT not found on your system))
+ROOT_PATH(, , AC_MSG_ERROR(ROOT not found on your system or ROOTSYS not set))
 ROOT_PATH(, AC_DEFUN([HAVE_ROOT]))
-#ACX_CHECK_FASTJET(, AC_MSG_ERROR(Fastjet not found on your system))
+ACX_CHECK_FASTJET(, AC_MSG_ERROR(Fastjet not found on your system))
 
 
 AC_CONFIG_SRCDIR([src/main.cc])

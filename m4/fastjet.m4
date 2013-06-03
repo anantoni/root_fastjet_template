@@ -52,6 +52,8 @@ fastjet::PseudoJet pj=fastjet::PtYPhiM(10.0,0.5,1.0,0.0);
    if test "${fjok}" = "yes"; then
       FASTJET_CXXFLAGS="`${fjconfig} --cxxflags`"
       FASTJET_LIBS="`${fjconfig} --libs --plugins`"
+      AC_SUBST(FASTJET_CXXFLAGS)
+      AC_SUBST(FASTJET_LIBS)	
       AC_MSG_RESULT(yes)
       $1
    else
