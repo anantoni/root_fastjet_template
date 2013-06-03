@@ -1,0 +1,5 @@
+autoscan: warning: missing AC_C_CONST wanted by: 
+	src/MyHistogram.cc:5
+	include/MyHistogram.h:10
+autoscan: warning: missing AC_PROG_RANLIB wanted by: 
+	ltmain.sh:1601
