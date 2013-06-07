@@ -7,17 +7,17 @@ OBJECTS              = main.o MyHistogram.o
 ROOTCFLAGS           = @ROOTCFLAGS@
 ROOTLIBS             = @ROOTLIBS@
 ROOTGLIBS            = @ROOTGLIBS@
-AM_CFLAGS            = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
-MYLIB                = ../lib/.libs/libmylib.a
-LIBS                 = $(ROOTLIBS)
-AM_LDFLAGS           = -O -L@ROOTLIBDIR@
 FJ_CXXFLAGS          = @FASTJET_CXXFLAGS@
 FJ_LIBS              = @FASTJET_LIBS@
+AM_CFLAGS            = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
+MYLIB                = -lmylib
+LIBS                 = $(ROOTLIBS) $(FJ_LIBS)
+AM_LDFLAGS           = -O -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS)
 
 all	: 	$(PROGNAME)
 
 $(PROGNAME):	$(OBJECTS)
-		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(MYLIB) $(AM_LDFLAGS) $(LIBS) $(FJ_CXXFLAGS) $(FJ_LIBS) 
+		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(MYLIB) $(LIBS)
 
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<

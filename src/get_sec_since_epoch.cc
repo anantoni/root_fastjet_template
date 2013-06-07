@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "mylib/mylib.hh"
 /* get_sec_since_epoch.c: A function to show the time since the Epoch */
  

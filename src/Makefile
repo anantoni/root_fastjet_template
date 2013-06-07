@@ -86,7 +86,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = $(ROOTLIBS)
+LIBS = $(ROOTLIBS) $(FJ_LIBS)
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
 LTLIBOBJS = 
@@ -167,11 +167,11 @@ BINDIR = ../bin/
 PROGNAME = root_fastjet_template
 SOURCES = main.cc MyHistogram.cc
 OBJECTS = main.o MyHistogram.o
-AM_CFLAGS = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
-MYLIB = ../lib/.libs/libmylib.a
-AM_LDFLAGS = -O -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib
 FJ_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/include
 FJ_LIBS = -Wl,-rpath,/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lm -L/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone
+AM_CFLAGS = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
+MYLIB = -lmylib
+AM_LDFLAGS = -O -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib -L../lib/.libs $(FJ_CXXFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -336,7 +336,7 @@ uninstall-am: uninstall-info-am
 all	: 	$(PROGNAME)
 
 $(PROGNAME):	$(OBJECTS)
-		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(MYLIB) $(AM_LDFLAGS) $(LIBS) $(FJ_CXXFLAGS) $(FJ_LIBS) 
+		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(MYLIB) $(LIBS)
 
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<

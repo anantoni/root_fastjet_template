@@ -57,7 +57,7 @@ int main() {
 
   MyHistogram myhist;
   myhist.Print();
-  cout << get_sec_since_epoch << endl;
+  cout << get_sec_since_epoch() << endl;
   hello();
   here();
   bye();
