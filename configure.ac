@@ -14,11 +14,6 @@ AC_C_CONST
 AC_PROG_CC
 AC_PROG_CXX
 
-ROOT_PATH(, , AC_MSG_ERROR(ROOT not found on your system or ROOTSYS not set))
-ROOT_PATH(, AC_DEFUN([HAVE_ROOT]))
-ACX_CHECK_FASTJET(, AC_MSG_ERROR(Fastjet not found on your system))
-
-
 AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile
@@ -33,8 +28,23 @@ AC_HEADER_TIME
 AC_LANG([C++])
 AC_PROG_INSTALL
 
-# Checks for libraries.
+# Checks for external libraries.
+ROOT_PATH(, , AC_MSG_ERROR(ROOT not found on your system or ROOTSYS not set))
+ROOT_PATH(, AC_DEFUN([HAVE_ROOT]))
+ACX_CHECK_FASTJET(, AC_MSG_ERROR(Fastjet not found on your system))
 
+AC_ARG_WITH([pythia],
+            [AS_HELP_STRING([--with-pythia=path : path to pythia installation],
+              [enable support for pythia])],
+            [],
+            [with_pythia=no])
+          
+AS_IF([test "x$with_pythia" != xno],
+      [AC_SUBST([LIBPYTHIA], ["-lpythia8 -llhapdfdummy"]) 
+       AC_SUBST([PYTHIA_LIBS], [-L$with_pythia/lib]) 
+       AC_SUBST([PYTHIA_CXXFLAGS], [-I$with_pythia/include])],
+      )
+            
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.

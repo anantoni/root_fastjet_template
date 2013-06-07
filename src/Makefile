@@ -86,7 +86,8 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = $(ROOTLIBS) $(FJ_LIBS)
+LIBPYTHIA = -lpythia8 -llhapdfdummy
+LIBS = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB)
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
 LTLIBOBJS = 
@@ -99,6 +100,8 @@ PACKAGE_STRING = root_fastjet_template 1.0
 PACKAGE_TARNAME = root_fastjet_template
 PACKAGE_VERSION = 1.0
 PATH_SEPARATOR = :
+PYTHIA_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/pythia8176/include
+PYTHIA_LIBS = -L/afs/cern.ch/user/a/anantoni/pythia8176/lib
 RANLIB = ranlib
 ROOTAUXCFLAGS = -pthread -m64
 ROOTAUXLIBS = -pthread -lm -ldl -rdynamic
@@ -169,9 +172,9 @@ SOURCES = main.cc MyHistogram.cc
 OBJECTS = main.o MyHistogram.o
 FJ_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/include
 FJ_LIBS = -Wl,-rpath,/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lm -L/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone
-AM_CFLAGS = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
+AM_CFLAGS = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS)
 MYLIB = -lmylib
-AM_LDFLAGS = -O -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib -L../lib/.libs $(FJ_CXXFLAGS)
+AM_LDFLAGS = -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS)
 all: all-am
 
 .SUFFIXES:
@@ -278,7 +281,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-local mostlyclean-am
+clean-am: clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -323,20 +326,20 @@ ps-am:
 uninstall-am: uninstall-info-am
 
 .PHONY: all all-am check check-am clean clean-generic clean-libtool \
-	clean-local distclean distclean-generic distclean-libtool \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	uninstall uninstall-am uninstall-info-am
+	distclean distclean-generic distclean-libtool distdir dvi \
+	dvi-am html html-am info info-am install install-am \
+	install-data install-data-am install-exec install-exec-am \
+	install-info install-info-am install-man install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
+	uninstall-info-am
 
 
 all	: 	$(PROGNAME)
 
 $(PROGNAME):	$(OBJECTS)
-		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(MYLIB) $(LIBS)
+		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(LIBS)
 
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<
@@ -346,9 +349,6 @@ MyHistogram.o:  MyHistogram.cc
 
 test:
 	@echo $(ROOTCFLAGS)
-
-clean-local:	
-	-rm -f ${PROGNAME} ${OBJECTS}
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

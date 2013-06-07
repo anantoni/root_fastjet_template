@@ -9,15 +9,18 @@ ROOTLIBS             = @ROOTLIBS@
 ROOTGLIBS            = @ROOTGLIBS@
 FJ_CXXFLAGS          = @FASTJET_CXXFLAGS@
 FJ_LIBS              = @FASTJET_LIBS@
-AM_CFLAGS            = -Wall -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS)
+PYTHIA_CXXFLAGS      = @PYTHIA_CXXFLAGS@
+PYTHIA_LIBS          = @PYTHIA_LIBS@
+LIBPYTHIA            = @LIBPYTHIA@
+AM_CFLAGS            = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS)
 MYLIB                = -lmylib
-LIBS                 = $(ROOTLIBS) $(FJ_LIBS)
-AM_LDFLAGS           = -O -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS)
+LIBS                 = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB)
+AM_LDFLAGS           = -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS)
 
 all	: 	$(PROGNAME)
 
 $(PROGNAME):	$(OBJECTS)
-		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(MYLIB) $(LIBS)
+		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(LIBS)
 
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<
@@ -27,7 +30,4 @@ MyHistogram.o:  MyHistogram.cc
 
 test:
 	@echo $(ROOTCFLAGS)
-
-clean-local:	
-	-rm -f ${PROGNAME} ${OBJECTS}
 
