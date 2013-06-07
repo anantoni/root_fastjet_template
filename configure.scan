@@ -8,7 +8,6 @@ AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CXX
-AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_INSTALL
@@ -19,13 +18,15 @@ AC_PROG_RANLIB
 # Checks for libraries.
 
 # Checks for header files.
+AC_CHECK_HEADERS([sys/time.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
+AC_HEADER_TIME
 
 # Checks for library functions.
+AC_CHECK_FUNCS([gettimeofday])
 
 AC_CONFIG_FILES([Makefile
-                 root_fastjet_template-1.0/Makefile
                  src/Makefile])
 AC_OUTPUT

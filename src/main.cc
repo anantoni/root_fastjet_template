@@ -2,6 +2,7 @@
 #include "TH1F.h"
 #include "fastjet/ClusterSequence.hh"
 #include <iostream>
+#include "mylib/mylib.hh"
 using namespace std;
 
 int main() {
@@ -54,10 +55,11 @@ int main() {
 	   inclusive_jets[i].perp());
   }
 
-  return 0;
- 
-
   MyHistogram myhist;
   myhist.Print();
+  cout << get_sec_since_epoch << endl;
+  hello();
+  here();
+  bye();
   return 0;
 }
