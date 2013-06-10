@@ -45,6 +45,19 @@ AS_IF([test "x$with_pythia" != xno],
        AC_SUBST([PYTHIA_CXXFLAGS], [-I$with_pythia/include])],
       )
             
+
+AC_ARG_WITH([hepmc],
+            [AS_HELP_STRING([--with-hepmc=path : path to hepmc library],
+              [enable support for HepMC])],
+            [],
+            [with_hepmc=no])
+
+AS_IF([test "x$with_hepmc" != xno],
+      [AC_SUBST([LIBHEPMC], ["-lHepMC -lHepMCfio"])
+       AC_SUBST([HEPMC_LIBS], [-L$with_hepmc/lib])
+       AC_SUBST([HEPMC_CXXFLAGS], [-I$with_hepmc/HepMC/include])],
+      )
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.

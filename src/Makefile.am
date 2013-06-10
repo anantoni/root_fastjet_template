@@ -12,10 +12,13 @@ FJ_LIBS              = @FASTJET_LIBS@
 PYTHIA_CXXFLAGS      = @PYTHIA_CXXFLAGS@
 PYTHIA_LIBS          = @PYTHIA_LIBS@
 LIBPYTHIA            = @LIBPYTHIA@
-AM_CFLAGS            = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS)
+HEPMC_CXXFLAGS       = @HEPMC_CXXFLAGS@
+HEPMC_LIBS           = @HEPMC_LIBS@
+LIBHEPMC             = @LIBHEPMC@
+AM_CFLAGS            = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS) $(HEPMC_CXXFLAGS)
 MYLIB                = -lmylib
-LIBS                 = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB)
-AM_LDFLAGS           = -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS)
+LIBS                 = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB) $(LIBHEPMC)
+AM_LDFLAGS           = -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS) $(HEPMC_LIBS)
 
 all	: 	$(PROGNAME)
 

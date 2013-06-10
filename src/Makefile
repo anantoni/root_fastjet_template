@@ -80,14 +80,17 @@ F77 = g77
 FASTJET_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/include
 FASTJET_LIBS = -Wl,-rpath,/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lm -L/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone
 FFLAGS = -g -O2
+HEPMC_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/HepMC/2.06.08/x86_64-slc5-gcc46-opt/HepMC/include
+HEPMC_LIBS = -L/afs/cern.ch/user/a/anantoni/HepMC/2.06.08/x86_64-slc5-gcc46-opt/lib
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LDFLAGS = 
+LIBHEPMC = -lHepMC -lHepMCfio
 LIBOBJS = 
 LIBPYTHIA = -lpythia8 -llhapdfdummy
-LIBS = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB)
+LIBS = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB) $(LIBHEPMC)
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
 LTLIBOBJS = 
@@ -172,9 +175,9 @@ SOURCES = main.cc MyHistogram.cc
 OBJECTS = main.o MyHistogram.o
 FJ_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/include
 FJ_LIBS = -Wl,-rpath,/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lm -L/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone
-AM_CFLAGS = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS)
+AM_CFLAGS = -I. -I.. -I../include $(ROOTCFLAGS) $(FJ_CXXFLAGS) $(PYTHIA_CXXFLAGS) $(HEPMC_CXXFLAGS)
 MYLIB = -lmylib
-AM_LDFLAGS = -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS)
+AM_LDFLAGS = -L/afs/cern.ch/cms/slc5_amd64_gcc462/lcg/root/5.32.00-cms21/lib -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS) $(HEPMC_LIBS)
 all: all-am
 
 .SUFFIXES:
