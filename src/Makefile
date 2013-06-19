@@ -80,14 +80,14 @@ F77 = g77
 FASTJET_CXXFLAGS = -I/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/include
 FASTJET_LIBS = -Wl,-rpath,/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lm -L/afs/cern.ch/user/a/anantoni/fastjet-3.0.3/../fastjet-install/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone
 FFLAGS = -g -O2
-HEPMC_CXXFLAGS = -I/afs/cern.ch/cms/slc5_amd64_gcc462/external/hepmc/2.06.07-cms/HepMC/include
-HEPMC_LIBS = -L/afs/cern.ch/cms/slc5_amd64_gcc462/external/hepmc/2.06.07-cms/lib
+HEPMC_CXXFLAGS = 
+HEPMC_LIBS = 
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LDFLAGS = 
-LIBHEPMC = -lHepMC -lHepMCfio
+LIBHEPMC = 
 LIBOBJS = 
 LIBPYTHIA = -lpythia8 -llhapdfdummy
 LIBS = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB) $(LIBHEPMC)
@@ -339,13 +339,19 @@ uninstall-am: uninstall-info-am
 	uninstall-info-am
 
 
-all	: 	$(PROGNAME)
+all	: 	$(PROGNAME) pythia-example
 
 $(PROGNAME):	$(OBJECTS)
 		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(LIBS)
 
+pythia-example: main01.o
+		$(CC) -o $(BINDIR)$@ main01.o $(PYTHIA_LIBS) $(LIBPYTHIA)
+
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<
+
+main01.o : 	main01.cc
+		$(CC) $(PYTHIA_CXXFLAGS) -c -g -o $@ $<
 
 MyHistogram.o:  MyHistogram.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<

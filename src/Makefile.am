@@ -20,13 +20,19 @@ MYLIB                = -lmylib
 LIBS                 = $(ROOTLIBS) $(FJ_LIBS) $(LIBPYTHIA) $(MYLIB) $(LIBHEPMC)
 AM_LDFLAGS           = -L@ROOTLIBDIR@ -L../lib/.libs $(FJ_CXXFLAGS) $(PYTHIA_LIBS) $(HEPMC_LIBS)
 
-all	: 	$(PROGNAME)
+all	: 	$(PROGNAME) pythia-example
 
 $(PROGNAME):	$(OBJECTS)
 		$(CC) -o $(BINDIR)$@ $(OBJECTS) $(AM_LDFLAGS) $(LIBS)
 
+pythia-example: main01.o
+		$(CC) -o $(BINDIR)$@ main01.o $(PYTHIA_LIBS) $(LIBPYTHIA)
+
 main.o : 	main.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<
+
+main01.o : 	main01.cc
+		$(CC) $(PYTHIA_CXXFLAGS) -c -g -o $@ $<
 
 MyHistogram.o:  MyHistogram.cc
 		$(CC) ${AM_CFLAGS} -c -g -o $@ $<
