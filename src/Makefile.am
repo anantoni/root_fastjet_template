@@ -41,3 +41,7 @@ MyHistogram.o:  MyHistogram.cc
 test:
 	@echo $(ROOTCFLAGS)
 
+clean:
+	rm -f *.o
+	rm -f ../bin/root_fastjet_template
+	rm -f ../bin/pythia-example
