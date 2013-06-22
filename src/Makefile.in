@@ -56,9 +56,7 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-
-# Tool-specific substitution variables
-CC = @CXX@
+CC = @CXX@ $(ARCHITECTURE)
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
@@ -169,6 +167,9 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+
+# Tool-specific substitution variables
+ARCHITECTURE = -m64
 BINDIR = ../bin/
 PROGNAME = @PACKAGE@
 SOURCES = main.cc MyHistogram.cc

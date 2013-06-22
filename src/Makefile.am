@@ -1,5 +1,6 @@
 # Tool-specific substitution variables
-CC = @CXX@
+ARCHITECTURE = -m64
+CC = @CXX@ $(ARCHITECTURE)
 BINDIR               = ../bin/
 PROGNAME             = @PACKAGE@
 SOURCES              = main.cc MyHistogram.cc

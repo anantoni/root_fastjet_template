@@ -56,9 +56,7 @@ AUTOCONF = ${SHELL} /afs/cern.ch/user/a/anantoni/projects/root_fastjet_template/
 AUTOHEADER = ${SHELL} /afs/cern.ch/user/a/anantoni/projects/root_fastjet_template/missing --run autoheader
 AUTOMAKE = ${SHELL} /afs/cern.ch/user/a/anantoni/projects/root_fastjet_template/missing --run automake-1.9
 AWK = gawk
-
-# Tool-specific substitution variables
-CC = g++
+CC = g++ $(ARCHITECTURE)
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CPP = gcc -E
@@ -169,6 +167,9 @@ sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 sysconfdir = ${prefix}/etc
 target_alias = 
+
+# Tool-specific substitution variables
+ARCHITECTURE = -m64
 BINDIR = ../bin/
 PROGNAME = root_fastjet_template
 SOURCES = main.cc MyHistogram.cc
